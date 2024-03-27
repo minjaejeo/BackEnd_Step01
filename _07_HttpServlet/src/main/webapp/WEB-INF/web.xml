@@ -15,13 +15,15 @@
   	<servlet-class>study01.servlets.HelloWorld</servlet-class>
   </servlet>
   -->
-<!--
-  	<!-- 주소와 매핑 -->
-  <servlet-mapping>
+	
+<!-- 주소와 매핑 -->
+<!--   <servlet-mapping>
   	<servlet-name>Hello</servlet-name>
   	<url-pattern>/Hello</url-pattern>
-  </servlet-mapping>
--->
+  </servlet-mapping>  -->
+
+
+
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
