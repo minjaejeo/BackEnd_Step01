@@ -22,10 +22,9 @@ public class CaculatorServlet extends HttpServlet {
 		operatorTable.put("*", new MulOperator());
 		operatorTable.put("/", new DivOperator());
 	}
-	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		System.out.println("CalculatorServlet - doGet......");
+		System.out.println("CaculatorServlet - doGet.....");
 		// 브라우저가 보낸 파라미터를 꺼낸다.
 		String op = req.getParameter("op");
 		double v1 = Double.parseDouble(req.getParameter("v1"));
@@ -35,6 +34,7 @@ public class CaculatorServlet extends HttpServlet {
 		resp.setContentType("text/html;charset=UTF-8");
 		PrintWriter out = resp.getWriter();	// 객체 내부에 tcp 소켓 스트림이 존재
 		
+		// 브라우저에 표현될 html
 		out.println("<html><body>");
 		out.println("<h1>계산 결과</h1>");
 		out.println("결과: ");
@@ -46,14 +46,13 @@ public class CaculatorServlet extends HttpServlet {
 				out.println("존재하지 않는 연산자입니다.");
 			else {
 				// 사칙 연산 클래스 모두 Operator의 상속을 받았으므로 해당 클래스의 메서드가 자동으로 호출
+				// 다형성
 				double result = operator.execute(v1, v2);
 				out.println(String.format("%.3f", result));
 			}
 		}catch(Exception e) {
-				out.println("연산 오류가 발생했습니다. ");
-			}
-			
-			out.println("<body></body>");
+			out.println("연산 오류가 발생했습니다.");
 		}
-
+		out.println("</body></html>");
+	}
 }

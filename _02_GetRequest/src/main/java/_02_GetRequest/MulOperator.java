@@ -9,7 +9,6 @@ public class MulOperator implements Operator {
 
 	@Override
 	public double execute(double a, double b) throws Exception {
-		return a * b;
+		return a*b;
 	}
-
 }

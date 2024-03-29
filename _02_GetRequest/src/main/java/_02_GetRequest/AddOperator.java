@@ -1,6 +1,6 @@
 package _02_GetRequest;
 
-public class AddOperator implements Operator {
+public class AddOperator implements Operator{
 
 	@Override
 	public String getName() {
@@ -9,7 +9,6 @@ public class AddOperator implements Operator {
 
 	@Override
 	public double execute(double a, double b) throws Exception {
-		return a + b;
+		return a+b;
 	}
-
 }
