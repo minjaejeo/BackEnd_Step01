@@ -17,10 +17,11 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		/*
 		 * 브라우저가 보내온 데이터가 한글인 경우
-		 * 값을 꺼내기 전에 문자셋 설정을 해야한다. 
-		 * get 요청은 tomcat 설정 파일에
-		 * post 요청은 이곳에서 처리한다.
+		 * 값을 꺼내기 전에 문자셋 설정을 해야한다.
+		 * get요청은 tomcat설정 파일에
+		 * post요청은 이곳에서 처리한다.
 		 */
+		
 		req.setCharacterEncoding("UTF-8");
 		String id = req.getParameter("id");
 		String pass = req.getParameter("password");
@@ -32,7 +33,7 @@ public class LoginServlet extends HttpServlet {
 		
 		out.println("<html><body>");
 		out.println("<h1>로그인 결과</h1>");
-		out.println(id+ "님을 환영합니다.");
+		out.println(id + "님을 환영합니다.");
 		out.println("</body></html>");
 	}
 }

@@ -13,8 +13,8 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 
-@WebServlet("/member/list")
 @SuppressWarnings("serial")
+@WebServlet("/member/list")
 public class MemberListServlet extends GenericServlet {
 
 	@Override
@@ -26,13 +26,16 @@ public class MemberListServlet extends GenericServlet {
 		try {
 			// 메모리에 클래스 로딩
 			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
-			conn = DriverManager.getConnection("jdbc:mysql://localhost:4306/studydb",	// JDBC url
-					"study", 	// id
-					"study");	// password
+			conn = DriverManager.getConnection(
+					"jdbc:mysql://localhost:4306/studydb",	// JDBC url
+					"study", // id
+					"study"	// password
+					);
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery("SELECT mno, mname, email, cre_date\r\n"
-					+ " FROM members\r\n"
-					+ " ORDER BY mno ASC");
+			rs = stmt.executeQuery("SELECT mno,mname,email,cre_date" + 
+								" FROM members" + 
+								" ORDER BY mno ASC"
+						);
 			res.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = res.getWriter();
 			out.println("<html><head><title>회원 목록</title></head>");
@@ -40,8 +43,8 @@ public class MemberListServlet extends GenericServlet {
 			while(rs.next()) {
 				out.println(
 						rs.getInt("mno") + ", " + 
-						rs.getString("mname") + ", " +
-						rs.getString("email") + ", " +
+						rs.getString("mname") + ", " + 
+						rs.getString("email") + ", " + 
 						rs.getDate("cre_date") + "<br>"
 						);
 			}
@@ -49,23 +52,10 @@ public class MemberListServlet extends GenericServlet {
 		}catch(Exception e) {
 			throw new ServletException(e);
 		}finally {
-			// 생성한 역순으로 닫아준다. 
-			try {
-				if(rs!=null) rs.close();
-			}catch(Exception e) {
-				
-			}
-			try {
-				if(stmt!=null) stmt.close();
-			}catch(Exception e) {
-				
-			}
-			try {
-				if(conn!=null) conn.close();
-			}catch(Exception e) {
-				
-			}
-			
+			// 생성한 역순으로 닫아준다.
+			try {if(rs!=null)rs.close();}catch(Exception e) {}
+			try {if(stmt!=null)stmt.close();}catch(Exception e) {}
+			try {if(conn!=null)conn.close();}catch(Exception e) {}
 		}
 	}
 

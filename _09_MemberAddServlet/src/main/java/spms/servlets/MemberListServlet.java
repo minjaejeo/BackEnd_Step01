@@ -38,12 +38,12 @@ public class MemberListServlet extends GenericServlet {
 			out.println("<html><head><title>회원 목록</title></head>");
 			out.println("<body><h1>회원 목록</h1>");
 			/*
-			 * 신규회원 추가 
-			 */
-			/*
-			 * href = '/add' => 절대 경로
+			 * 신규회원 추가
+			 * 
+			 * href = '/add' => 절대경로
 			 * 	localhost:9999/<contextRoot>/add
-			 * href = 'add'
+			 * 
+			 * href = 'add' => 상대경로
 			 * 	localhost:9999/<contextRoot>/member/add
 			 */
 			out.println("<p><a href='add'>신규 회원</a></p>");
@@ -60,22 +60,9 @@ public class MemberListServlet extends GenericServlet {
 			throw new ServletException(e);
 		}finally {
 			// 생성한 역순으로 닫아준다. 
-			try {
-				if(rs!=null) rs.close();
-			}catch(Exception e) {
-				
-			}
-			try {
-				if(stmt!=null) stmt.close();
-			}catch(Exception e) {
-				
-			}
-			try {
-				if(conn!=null) conn.close();
-			}catch(Exception e) {
-				
-			}
-			
+			try {if(rs!=null) rs.close();} catch(Exception e) {}
+			try {if(stmt!=null) stmt.close();} catch(Exception e) {}
+			try {if(conn!=null) conn.close();} catch(Exception e) {}
 		}
 	}
 
