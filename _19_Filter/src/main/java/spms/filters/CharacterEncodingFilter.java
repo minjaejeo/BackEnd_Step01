@@ -9,10 +9,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
-
-
 public class CharacterEncodingFilter implements Filter {
-	
 	FilterConfig config;
 	
 	@Override
@@ -35,8 +32,8 @@ public class CharacterEncodingFilter implements Filter {
 	
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
-		Filter.super.destroy();
+		System.out.println("CharacterEncodingFilter::destroy() 호출");
 	}
+	
 
 }
