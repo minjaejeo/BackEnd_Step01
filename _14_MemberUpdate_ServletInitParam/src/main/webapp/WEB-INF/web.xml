@@ -14,11 +14,11 @@
   		<param-name>url</param-name>
   		<param-value>jdbc:mysql://localhost:4306/studydb</param-value>
   	</init-param>
-  	  	<init-param>
+  	<init-param>
   		<param-name>username</param-name>
   		<param-value>study</param-value>
   	</init-param>
-  	 <init-param>
+  	<init-param>
   		<param-name>password</param-name>
   		<param-value>study</param-value>
   	</init-param>

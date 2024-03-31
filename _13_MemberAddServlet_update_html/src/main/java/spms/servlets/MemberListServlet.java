@@ -51,7 +51,7 @@ public class MemberListServlet extends GenericServlet {
 				out.println(
 						rs.getInt("mno") + ", " + 
 						// /member/update로 get요청을 하는데 mno값을 가지고 이동해라
-						"<a href='update?no=" + rs.getInt("mno") + "'>" + 
+						"<a href='update=no?" + rs.getInt("mno") + "'>" + 
 						rs.getString("mname") + "</a>, " +
 						rs.getString("email") + ", " +
 						rs.getDate("cre_date") + "<br>"
@@ -62,21 +62,9 @@ public class MemberListServlet extends GenericServlet {
 			throw new ServletException(e);
 		}finally {
 			// 생성한 역순으로 닫아준다. 
-			try {
-				if(rs!=null) rs.close();
-			}catch(Exception e) {
-				
-			}
-			try {
-				if(stmt!=null) stmt.close();
-			}catch(Exception e) {
-				
-			}
-			try {
-				if(conn!=null) conn.close();
-			}catch(Exception e) {
-				
-			}
+			try {if(rs!=null) rs.close();} catch(Exception e) {}
+			try {if(stmt!=null) stmt.close();} catch(Exception e) {}
+			try {if(conn!=null) conn.close();} catch(Exception e) {}
 			
 		}
 	}

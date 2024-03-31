@@ -60,21 +60,9 @@ public class MemberListServlet extends GenericServlet {
 			throw new ServletException(e);
 		}finally {
 			// 생성한 역순으로 닫아준다. 
-			try {
-				if(rs!=null) rs.close();
-			}catch(Exception e) {
-				
-			}
-			try {
-				if(stmt!=null) stmt.close();
-			}catch(Exception e) {
-				
-			}
-			try {
-				if(conn!=null) conn.close();
-			}catch(Exception e) {
-				
-			}
+			try {if(rs!=null) rs.close();} catch(Exception e) {}
+			try {if(stmt!=null) stmt.close();} catch(Exception e) {}
+			try {if(conn!=null) conn.close();} catch(Exception e) {}
 			
 		}
 	}
