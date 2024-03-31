@@ -5,7 +5,7 @@
 	version="4.0">
 	<display-name>_14_MemberUpdate_ServletInitParam</display-name>
 
-	<!-- 컨텍스트 초기화 파라미터 컨텍스트: Web Application, 전체가 공유하는 영역 -->
+	<!-- 컨텍스트 초기화 파라미터 컨텍스트 : Web Application, 전체가 공유하는 영역 -->
 	<context-param>
 		<param-name>driver</param-name>
 		<param-value>com.mysql.cj.jdbc.Driver</param-value>
