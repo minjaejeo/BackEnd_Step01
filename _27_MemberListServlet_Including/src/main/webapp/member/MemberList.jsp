@@ -9,7 +9,7 @@
 <title>회원 목록</title>
 </head>
 <body>
-	<% 
+	<%
 		//<jsp:forward page="/Forward.jsp"/>
 	%>
 	<jsp:include page="/Header.jsp"/>
@@ -29,7 +29,6 @@
 		}
 	
 	%>
-	
 	<jsp:include page="/Tail.jsp"/>
 </body>
 </html>

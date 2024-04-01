@@ -31,7 +31,7 @@ public class MemberListServlet extends HttpServlet {
 		ResultSet rs = null;	// Select문의 결과
 		
 		try {
-			// ServletContext 영역에 저장된 conn이라는 이름으로 저장된 객체를 꺼내서 사용
+			// ServletContext 영역에 conn이라는 이름으로 저장된 객체를 꺼내서 사용
 			ServletContext sc = this.getServletContext();
 			conn = (Connection)sc.getAttribute("conn");
 			

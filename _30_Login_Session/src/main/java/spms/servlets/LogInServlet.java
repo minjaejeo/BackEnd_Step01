@@ -16,10 +16,11 @@ import javax.servlet.http.HttpSession;
 
 import spms.vo.Member;
 
+
 @SuppressWarnings("serial")
 @WebServlet("/auth/login")
-public class LogInServlet extends HttpServlet{
-
+public class LogInServlet extends HttpServlet {
+	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		RequestDispatcher rd = req.getRequestDispatcher("/auth/LogInForm.jsp");
@@ -44,23 +45,22 @@ public class LogInServlet extends HttpServlet{
 			// 회원이 존재하면
 			if(rs.next()) {
 				Member member = new Member()
-							.setEmail(rs.getString("email"))
-							.setName(rs.getString("mname"));
-				
+									.setEmail(rs.getString("email"))
+									.setName(rs.getString("mname"));
 				// 세션 영역에 로그인 정보 저장
 				HttpSession session = req.getSession();
 				session.setAttribute("member", member);
 				
 				resp.sendRedirect("../member/list");
-			}else {
+			}else{
 				RequestDispatcher rd = req.getRequestDispatcher("/auth/LogInFail.jsp");
 				rd.forward(req, resp);
 			}
 		}catch(Exception e) {
 			
 		}finally {
-			try {if(rs!=null) rs.close();} catch(Exception e) {}
-			try {if(stmt!=null) stmt.close();} catch(Exception e) {}
+			try {if(rs!=null) rs.close();}catch(Exception e) {}
+			try {if(stmt!=null) stmt.close();}catch(Exception e) {}
 		}
 	}
 }

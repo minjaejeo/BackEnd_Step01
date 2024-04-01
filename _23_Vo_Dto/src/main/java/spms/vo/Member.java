@@ -1,25 +1,26 @@
 package spms.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 /*
- * 테이블의 1개행의 데이터를 모두 묶어서 담는 클래스 객체를 
- * Vo(Value object)라고 한다.
- *  
- * MVC의 역할을 나누면 (테이블) 데이터를 묶어서 전달하는 객체 필요하다.
+ * 테이블의 1개행의 데이터를 모두 묶어서 담는 클래스 객체를
+ * Vo(Value Object)라고 한다.
+ * 
+ * MVC의 역할을 나누면 (테이블)데이터를 묶어서 전달하는 객체 필요하다.
  * 이 때 Vo를 주고 받으면 이 Vo는 Dto(Data Transfer Object)라고 불린다.
  * 
  * Vo와 Dto는 구성이 같지만 가끔 용도에 따라 필드를 약간 달리할 때가 있다.
- * 또 getter/setter도 달리할 때가 있다. 
+ * 또 getter/setter도 달리할 때가 있다.
  * 이럴 때는 Vo와 Dto를 따로 만드는 경우도 있다.
- * 그래서 ModelMapper로 VO <-> Dto를 상호 변환해서 사용하기도 한다.
+ * 그럴때 ModelMapper로 Vo <-> Dto를 상호 변환해서 사용하기도 한다
  */
+
 public class Member {
 	private int no;
 	private String name;
 	private String email;
 	private String password;
-	private Date createdDate;
+	private Date createDate;
 	private Date modifiedDate;
 	
 	public int getNo() {
@@ -50,11 +51,11 @@ public class Member {
 		this.password = password;
 		return this;
 	}
-	public Date getCreatedDate() {
-		return createdDate;
+	public Date getCreateDate() {
+		return createDate;
 	}
-	public Member setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
+	public Member setCreateDate(Date createDate) {
+		this.createDate = createDate;
 		return this;
 	}
 	public Date getModifiedDate() {
@@ -66,9 +67,10 @@ public class Member {
 	}
 	@Override
 	public String toString() {
-		return "Member [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + ", createdDate="
-				+ createdDate + ", modifiedDate=" + modifiedDate + "]";
+		return "Member [no=" + no + ", name=" + name + ", email=" + email + ", password=" + password + ", createDate="
+				+ createDate + ", modifiedDate=" + modifiedDate + "]";
 	}
+	
 	
 	
 }

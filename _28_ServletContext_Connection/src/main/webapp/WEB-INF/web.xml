@@ -33,7 +33,6 @@
 		<servlet-class>spms.servlets.AppInitServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
-	
 	<!-- 서블릿과 주소를 매핑 -->
 
 	<welcome-file-list>

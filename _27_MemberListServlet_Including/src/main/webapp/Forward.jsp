@@ -9,7 +9,7 @@
 <body>
 	<h2>Forwarding</h2>
 	<div style="background-color:#00008b;color:white;height:20px;padding:5px;">
-	SPMS(Simple Project Management System)
+		SPMS(Simple Project Management System)
 	</div>
 </body>
 </html>
