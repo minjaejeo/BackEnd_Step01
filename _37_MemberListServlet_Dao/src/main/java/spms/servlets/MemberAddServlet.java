@@ -69,7 +69,9 @@ public class MemberAddServlet extends HttpServlet {
 			rd.forward(req, resp);
 		}finally {
 			try {if(stmt!=null) stmt.close();} catch(Exception e) {}
-			try {if(conn!=null) conn.close();} catch(Exception e) {}
+			// Connection객체를 1개 생성해서 ServletContext영역에 보관하고
+			
+			//try {if(conn!=null) conn.close();} catch(Exception e) {}
 		}
 		
 	}
