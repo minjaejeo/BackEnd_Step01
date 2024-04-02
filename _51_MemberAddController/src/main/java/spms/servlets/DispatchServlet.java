@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import spms.controls.Controller;
+import spms.controls.MemberAddController;
 import spms.controls.MemberListController;
 import spms.vo.Member;
 
@@ -56,6 +57,14 @@ public class DispatchServlet extends HttpServlet {
 				//pageControllerPath = "/member/list";
 				pageController = new MemberListController();
 			}else if("/member/add.do".equals(servletPath)) {
+				pageController = new MemberAddController();
+				if(req.getParameter("email") != null) {
+					model.put("member", new Member()
+							.setEmail(req.getParameter("email"))
+							.setPassword(req.getParameter("password"))
+							.setName(req.getParameter("name")));
+				}
+				/*
 				pageControllerPath = "/member/add";
 				if(req.getParameter("email") != null) {
 					req.setAttribute("member", new Member()
@@ -64,6 +73,7 @@ public class DispatchServlet extends HttpServlet {
 								.setName(req.getParameter("name"))	
 							);
 				}
+				*/
 			}else if("/member/update.do".equals(servletPath)) {
 				pageControllerPath = "/member/update";
 				if(req.getParameter("email") != null) {

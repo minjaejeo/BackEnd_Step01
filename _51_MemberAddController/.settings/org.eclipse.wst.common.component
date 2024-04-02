@@ -175,7 +175,7 @@
         
         
         <property name="java-output-path" value="/_08_MemberListServlet/build/classes"/>
-        <property name="context-root" value="_50_MemberListController"/>
+        <property name="context-root" value="_51_MemberAddController"/>
                                                                                                                                                                                                                                                                                                                                                             
     
     
