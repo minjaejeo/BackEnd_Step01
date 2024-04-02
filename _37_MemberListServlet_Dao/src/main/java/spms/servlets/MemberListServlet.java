@@ -2,10 +2,8 @@ package spms.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -27,11 +25,12 @@ public class MemberListServlet extends HttpServlet{
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		System.out.println("MemberListServlet::doGet() 호출");
 		
-		Connection conn = null;			
-		Statement stmt = null;			
-		ResultSet rs = null;			
+		Connection conn = null;			// DB 서버와의 연결 객체
+		Statement stmt = null;			// sql문
+		ResultSet rs = null;			// Select문의 결과
 		
 		try {
+
 			ServletContext sc = this.getServletContext();
 			conn = (Connection)sc.getAttribute("conn");
 			
@@ -41,10 +40,12 @@ public class MemberListServlet extends HttpServlet{
 			
 			/*
 			stmt = conn.createStatement();
+
 			rs = stmt.executeQuery("SELECT mno, mname, email, cre_date" +
 								 " FROM members" +
 								 " ORDER BY mno ASC");
 			List<Member> members = new ArrayList<>();
+
 			while(rs.next()) {
 				members.add(new Member()
 								.setNo(rs.getInt("mno"))
@@ -54,15 +55,15 @@ public class MemberListServlet extends HttpServlet{
 						);
 			}
 			*/
-			
-			
-			
+
 			req.setAttribute("members", members);
 			RequestDispatcher rd = req.getRequestDispatcher(
 						"/member/MemberList.jsp");
 			
 			res.setContentType("text/html;charset=UTF-8");
 			rd.include(req, res);
+			
+			
 		}catch(Exception e) {
 			//throw new ServletException(e);
 			e.printStackTrace();
