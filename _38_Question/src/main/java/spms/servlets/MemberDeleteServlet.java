@@ -2,7 +2,8 @@ package spms.servlets;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Statement;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -14,54 +15,52 @@ import javax.servlet.http.HttpServletResponse;
 
 import spms.dao.MemberDao;
 
-@SuppressWarnings("serial")
 @WebServlet("/member/delete")
+@SuppressWarnings("serial")
 public class MemberDeleteServlet extends HttpServlet {
 
 	@Override
-	public void doGet(
-			HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
 		System.out.println("MemberDeleteServlet::doGet() 호출");
 		
+		
 		Connection conn = null;
-		Statement stmt = null;
-
+		PreparedStatement stmt = null;
 		try {
-		      ServletContext sc = this.getServletContext();
-		      conn = (Connection) sc.getAttribute("conn"); 
-
-		      MemberDao memberDao = new MemberDao();
-		      memberDao.setConnection(conn);
-		         
-		      memberDao.delete(Integer.parseInt(request.getParameter("no")));			
+			ServletContext sc = this.getServletContext();
+			conn = (Connection) sc.getAttribute("conn");
+			MemberDao memberDao = new MemberDao();
+			memberDao.setConnection(conn);
 			
+			memberDao.delete(Integer.parseInt(req.getParameter("no")));
 			/*
 			ServletContext sc = this.getServletContext();
 			Class.forName(sc.getInitParameter("driver"));
 			conn = DriverManager.getConnection(
 						sc.getInitParameter("url"),
 						sc.getInitParameter("username"),
-						sc.getInitParameter("password")); 
-			stmt = conn.createStatement();
-			stmt.executeUpdate(
-					"DELETE FROM members WHERE mno=" + 
-					request.getParameter("no"));
+						sc.getInitParameter("password")
+					);
+			stmt = conn.prepareStatement("DELETE FROM members WHERE mno=?");
+			stmt.setInt(1, Integer.parseInt(req.getParameter("no")));
+			stmt.executeUpdate();
 			*/
-			
-			response.sendRedirect("list");
-			
-		} catch (Exception e) {
-			//throw new ServletException(e);
-			e.printStackTrace();
-			request.setAttribute("error", e);
-			RequestDispatcher rd = request.getRequestDispatcher("/Error.jsp");
-			rd.forward(request, response);
-			
-		} finally {
-			try {if (stmt != null) stmt.close();} catch(Exception e) {}
-			//try {if (conn != null) conn.close();} catch(Exception e) {}
-		}
 
-	}
+			resp.sendRedirect("list");
+			
+			
+		}catch(Exception e) {
+			// throw new ServletException(e);
+			e.printStackTrace();
+			req.setAttribute("error", e);
+			RequestDispatcher rd = req.getRequestDispatcher("/Error.jsp");
+			rd.forward(req, resp);
+		}finally {
+			try {if(stmt!=null) stmt.close();} catch(Exception e) {}
+			//try {if(conn!=null) conn.close();} catch(Exception e) {}			
+		}
+		
 }
+}
+
