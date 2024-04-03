@@ -30,17 +30,18 @@ public class MemberListServlet extends HttpServlet{
 		Statement stmt = null;
 		ResultSet rs = null;
 		*/
+		
 		try {
 			ServletContext sc = this.getServletContext();
 			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
 			List<Member> members = memberDao.selectList();
 			/*
 			conn = (Connection)sc.getAttribute("conn");
-			
 			MemberDao memberDao = new MemberDao();
 			memberDao.setConnection(conn);
 			List<Member> members = memberDao.selectList();
-			*/
+			 */
+
 			req.setAttribute("members", members);
 			RequestDispatcher rd = req.getRequestDispatcher(
 						"/member/MemberList.jsp");			
@@ -56,15 +57,12 @@ public class MemberListServlet extends HttpServlet{
 		}
 		/*
 		finally {
-			
 			// 생성한 역순으로 닫아준다.
 			try {if(rs!=null) rs.close();} catch(Exception e) {}
 			try {if(stmt!=null) stmt.close();} catch(Exception e) {}
 			// ServletContext에 공유하는 Connection는 닫으면 다른 곳에서 사용 못한다.
 
 			//try {if(conn!=null) conn.close();} catch(Exception e) {}
-			 * 
-			 
 		}
 		*/
 	}

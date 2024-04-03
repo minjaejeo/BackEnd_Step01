@@ -6,7 +6,6 @@ import java.sql.DriverManager;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.annotation.WebListener;
 
 import spms.dao.MemberDao;
 
@@ -20,10 +19,10 @@ public class ContextLoaderListener implements ServletContextListener {
 	
 	Connection conn;
 	
-	
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
 		System.out.println("ContextLoaderListener::contextInitialized() 호출");
+		
 		try {
 			ServletContext sc = sce.getServletContext();
 			
@@ -35,9 +34,8 @@ public class ContextLoaderListener implements ServletContextListener {
 					);
 			MemberDao memberDao = new MemberDao();
 			memberDao.setConnection(conn);
-			
 			sc.setAttribute("memberDao", memberDao);
-		}catch(Exception e){
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -45,12 +43,12 @@ public class ContextLoaderListener implements ServletContextListener {
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
 		System.out.println("ContextLoaderListener::contextDestroyed() 호출");
+		
 		try {
-			if(conn != null && conn.isClosed()==false)
+			if(conn != null && conn.isClosed() == false)
 				conn.close();
 		}catch(Exception e) {
 			
 		}
 	}
-
 }

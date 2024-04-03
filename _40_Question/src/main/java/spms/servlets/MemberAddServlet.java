@@ -44,12 +44,12 @@ public class MemberAddServlet extends HttpServlet{
 
 		      MemberDao memberDao = new MemberDao();
 		      memberDao.setConnection(conn);
-		    */
+		     */
 		      memberDao.insert(new Member()
 		        .setEmail(req.getParameter("email"))
 		        .setPassword(req.getParameter("password"))
 		        .setName(req.getParameter("name")));
-
+		    
 			resp.sendRedirect("list");
 
 		}catch(Exception e) {
