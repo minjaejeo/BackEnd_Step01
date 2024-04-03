@@ -61,7 +61,8 @@
          Define a non-SSL/TLS HTTP/1.1 Connector on port 8080
     -->
     <!-- GET 요청의 문자셋은 이곳에서 함 -->
-    <Connector URIEncoding="UTF-8" connectionTimeout="20000" maxParameterCount="1000" port="9999" protocol="HTTP/1.1" redirectPort="8443"/>
+    <Connector connectionTimeout="20000" maxParameterCount="1000" port="9999" protocol="HTTP/1.1" redirectPort="8443"
+    			URIEncoding="UTF-8"/>
     <!-- A "Connector" using the shared thread pool-->
     <!--
     <Connector executor="tomcatThreadPool"
@@ -161,7 +162,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="_37_MemberListServlet_Dao" path="/_37_MemberListServlet_Dao" reloadable="true" source="org.eclipse.jst.jee.server:_37_MemberListServlet_Dao"/><Context docBase="_57_Automation_FrontController" path="/_57_Automation_FrontController" reloadable="true" source="org.eclipse.jst.jee.server:_57_Automation_FrontController"/></Host>
+      <Context docBase="_10_MemberAddServlet_Post" path="/_10_MemberAddServlet_Post" reloadable="true" source="org.eclipse.jst.jee.server:_10_MemberAddServlet_Post"/></Host>
     </Engine>
   </Service>
 </Server>

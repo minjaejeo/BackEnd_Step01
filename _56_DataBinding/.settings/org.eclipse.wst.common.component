@@ -191,7 +191,7 @@
         
         
         <property name="java-output-path" value="/_08_MemberListServlet/build/classes"/>
-        <property name="context-root" value="_55_MemberDao_To_Interface"/>
+        <property name="context-root" value="_56_DataBinding"/>
                                                                                                                                                                                                                                                                                                                                                                                             
     
     

@@ -11,40 +11,58 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import spms.bind.DataBinding;
+import spms.bind.ServletRequestDataBinder;
 import spms.controls.Controller;
-import spms.controls.LogInController;
-import spms.controls.LogOutController;
-import spms.controls.MemberAddController;
-import spms.controls.MemberDeleteController;
-import spms.controls.MemberListController;
-import spms.controls.MemberUpdateController;
-import spms.vo.Member;
 
 
 @SuppressWarnings("serial")
 @WebServlet("*.do")
 public class DispatcherServlet extends HttpServlet{
+	
+	private void prepareRequestData(HttpServletRequest req, // 브라우저가 보내오는 Parameter
+			Map<String, Object> model, 	// 자동 생성된 객체를 저장할 model 객체
+			DataBinding dataBinding) // Controller에서 자동생성 정보 추출 위한 인터페이스
+					throws Exception{
+		Object[] dataBinders = dataBinding.getDataBinders();
+		String dataName = null;	// 생성할 객체 이름
+		Class<?> dataType = null;	// 데이터 클래스 타입
+		Object dataObj = null;	// 생성된 객체
+		
+		for(int i=0;i<dataBinders.length;i+=2) {
+			dataName = (String)dataBinders[i];
+			dataType = (Class<?>)dataBinders[i+1];
+			// 데이터 객체 생성
+			dataObj = ServletRequestDataBinder.bind(req, dataType, dataName);
+			// 생성 데이터 model에 저장
+			model.put(dataName, dataObj);
+		}
+	}
 
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-		resp.setContentType("text/html; charset=UTF-8");
-
-		String servletPath = req.getServletPath();
-		System.out.println("DispatchServlet::service() - servletPath=" + servletPath);
-		
-
-		Map<String, Object> model = new ConcurrentHashMap<>();
-		//model.put("memberDao", this.getServletContext().getAttribute("memberDao"));
-		model.put("session", req.getSession());
-		
-		// 해당 주소와 일치하는 클래스 객체를 꺼내온다.
-		Controller pageController = (Controller)this.getServletContext().getAttribute(servletPath);
-		
+	
 		try {
-			String pageControllerPath = null;
 
+			resp.setContentType("text/html; charset=UTF-8");
+			String servletPath = req.getServletPath();
+			System.out.println("DispatchServlet::service() - servletPath=" + servletPath);
+			
+
+			Map<String, Object> model = new ConcurrentHashMap<>();
+			//model.put("memberDao", this.getServletContext().getAttribute("memberDao"));
+			model.put("session", req.getSession());
+			
+			// 해당 주소와 일치하는 클래스 객체를 꺼내온다.
+			Controller pageController = (Controller)this.getServletContext().getAttribute(servletPath);
+			
+			// DataBinding 인터페이스를 상속받은 pageController인 경우
+			if(pageController instanceof DataBinding) {
+				prepareRequestData(req, model, (DataBinding)pageController);
+			}
+			
+			/* 아래 대신 Reflection을 사용해서 자동화 처리할 예정
 			if("/member/list.do".equals(servletPath)) {
 
 				//pageController = new MemberListController();
@@ -81,28 +99,16 @@ public class DispatcherServlet extends HttpServlet{
 			}else if("/auth/logout.do".equals(servletPath)) {
 				//pageController = new LogOutController();
 			}
+			*/	
+
+			System.out.println("DispatchServlet::service() - pageController=" 
+												+ pageController.getClass().getName());
+			String viewUrl = pageController.execute(model);
 			
-			String viewUrl = "";		
-			
-			// pageController 객체가 존재한다면
-			if(pageController != null) {
-				System.out.println("DispatchServlet::service() - pageController=" 
-													+ pageController.getClass().getName());
-				viewUrl = pageController.execute(model);
-				
-				/*
-				 * PageController.execute(model)내에서 처리된 결과 정보가 model에 들어있다.
-				 * 다음 화면 구성을 위해 jsp보내는 경우 jsp는 req를 통해서 데이터를 전달받기 때문에
-				 * model에 있는 처리 결과 정보를 꺼내서 다시 req에 담는다.
-				 */
-				for(String key : model.keySet()) {
-					req.setAttribute(key, model.get(key));
-				}
+			for(String key : model.keySet()) {
+				req.setAttribute(key, model.get(key));
 			}
-			// 아직 pageController가 존재하지 않고, Servlet으로 되어 있을 때
-			else {
-				System.out.println("DispatchServlet::service() - pageController=" + pageControllerPath);
-			}		
+
 			
 			System.out.println("DispatchServlet::service() - viewUrl=" + viewUrl);
 			System.out.println("");
