@@ -81,6 +81,7 @@ public class DispatchServlet extends HttpServlet {
 			// pageControllerPath가 지정해준 viewUrl값을 꺼내서 화면 생성을 맡긴다.
 			String viewUrl = (String)req.getAttribute("viewUrl");
 			System.out.println("DispatchServlet::service() - viewUrl = " + viewUrl);
+			System.out.println("");
 			
 			// viewUrl이 'redirect:'로 시작되는 문자열이면 redirect요청이라고 판단하고 처리한다.
 			if(viewUrl.startsWith("redirect:")) {

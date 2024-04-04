@@ -26,24 +26,23 @@ public class MemberListServlet extends HttpServlet{
 		System.out.println("MemberListServlet::doGet() 호출");
 
 		try {
-			// Dao로부터 필요한 객체 생성 후 request 에 저장
+			// Dao 로부터 필요한 객체 생성 후 request에 저장
 			ServletContext sc = this.getServletContext();
 			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
 			List<Member> members = memberDao.selectList();
-			
-			// jsp이동을 위한 jsp 페이지 정보를 request에 저장
-			req.setAttribute("viewUrl", "/member/MemberList.jsp");
-
 			req.setAttribute("members", members);
-			// 이제 jsp로 직접 보내는 것이 아니라
-			// DispatchServlet에게 jsp 이동을 맡긴다.
+			
+			// jsp이동을 위한 jsp페이지 정보를 request에 저장
+			req.setAttribute("viewUrl", "/member/MemberList.jsp");
+			
+			// 이제 jsp로 직접보내는 것이 아니라
+			// DispatchServlet에게 jsp이동을 맡긴다.
 			/*
 			RequestDispatcher rd = req.getRequestDispatcher(
 						"/member/MemberList.jsp");			
 			res.setContentType("text/html;charset=UTF-8");
 			rd.include(req, res);
 			*/
-
 		}catch(Exception e) {
 			throw new ServletException(e);
 			// 예외처리를 DispatchServlet에서 처리하도록 일원화하기 위해 아래를 주석처리한다.
