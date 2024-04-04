@@ -7,6 +7,7 @@ import javax.servlet.ServletContextListener;
 import org.apache.commons.dbcp.BasicDataSource;
 
 import spms.dao.MemberDao;
+import spms.util.DBConnectionPool;
 
 /* 웹 어플리케이션이 실행되었을 때 자동으로 호출되는 클래스 
  * ServletContext영역이 준비되었습니다...
@@ -15,10 +16,8 @@ import spms.dao.MemberDao;
 //@WebListener
 public class ContextLoaderListener implements ServletContextListener{
 
-	/*
 	//Connection conn;
-	DBConnectionPool connPool;
-	*/
+//	DBConnectionPool connPool;
 	BasicDataSource ds;
 	
 	@Override
@@ -47,17 +46,7 @@ public class ContextLoaderListener implements ServletContextListener{
 			MemberDao memberDao = new MemberDao();
 			memberDao.setDBConnectionPool(connPool);
 			*/
-			/*
-			Class.forName(sc.getInitParameter("driver"));
-			conn = DriverManager.getConnection(
-					sc.getInitParameter("url"),
-					sc.getInitParameter("username"),
-					sc.getInitParameter("password")
-					);
 			
-			MemberDao memberDao = new MemberDao();
-			memberDao.setConnection(conn);
-			*/
 			
 			sc.setAttribute("memberDao", memberDao);
 			
@@ -71,9 +60,10 @@ public class ContextLoaderListener implements ServletContextListener{
 		System.out.println("ContextLoaderListener::contextDestroyed() 호출");
 		
 		try {
-			if(ds != null) 
+			if(ds != null)
 				ds.close();
-			//connPool.closeAll();
+			
+//			connPool.closeAll();
 			
 //			if(conn != null && conn.isClosed() == false)
 //				conn.close();

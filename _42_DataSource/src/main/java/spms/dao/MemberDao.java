@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import spms.util.DBConnectionPool;
 import spms.vo.Member;
 
 /* Dao (Data Access Object)
@@ -23,20 +24,19 @@ public class MemberDao {
 	private String strUpdate = "UPDATE members SET email=?, mname=?, mod_date=NOW() WHERE mno=?";
 	private String strExist = "SELECT mname, email FROM members WHERE email=? AND pwd=?";
 
-	// apache 라이브러리에서 제공하는 DataSource내에 커넥션풀이 포함되어 있다.
+	// apache 라이브러리에서 제공하는 DataSource내에 커넥션풀이 포함되어 있다. 
 	DataSource ds;
-
+	
 	public void setDataSource(DataSource ds) {
 		this.ds = ds;
-	}
-
-	// 우리가 만든 커넥션 풀을 사용하지 않는다.
-	/*
-	 * DBConnectionPool connPool;
-	 * 
-	 * public void setDBConnectionPool(DBConnectionPool connPool) { this.connPool =
-	 * connPool; }
-	 */
+		}
+	
+	
+	// 우리가 만든 커넷션 풀을 사용하지 않는다.
+	// DBConnectionPool connPool;
+//	public void setDBConnectionPool(DBConnectionPool connPool) {
+//		this.connPool = connPool;
+//	}
 
 	// MemberListServlet에서 필요
 	public List<Member> selectList() throws Exception {
@@ -47,9 +47,8 @@ public class MemberDao {
 
 		try {
 			// 커넥션풀에서 객체를 빌려온다.
-			// connection = this.connPool.getConnection();
+//			connection = this.connPool.getConnection();
 			connection = this.ds.getConnection();
-
 			stmt = connection.prepareStatement(strSelectList);
 			rs = stmt.executeQuery();
 
@@ -65,29 +64,16 @@ public class MemberDao {
 		} catch (Exception e) {
 			throw e;
 		} finally {
-			try {
-				if (rs != null)
-					rs.close();
-			} catch (Exception e) {
-			}
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (Exception e) {
-			}
+			try {if(rs!=null) rs.close();} catch(Exception e) {}
+			try {if(stmt!=null) stmt.close();} catch(Exception e) {}
 
 			// 커넥션풀에서 빌려온 Connection 객체를 반납한다.
 //			if (connection != null)
 //				connPool.returnConnection(connection);
 
-			// DataSource가 제공하는 Connection의 Close()는 서버와의 단절이 아니라
+			// DataSource가 제공하는 connection의 close()는 서버와의 단절이 아니라
 			// 커넥션풀로의 반환을 의미한다.
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (Exception e) {
-			}
-
+			try {if(connection != null) connection.close();}catch(Exception e) {}
 		}
 	}
 
@@ -106,29 +92,19 @@ public class MemberDao {
 			stmt.setString(2, member.getPassword());
 			stmt.setString(3, member.getName());
 
-			/*
-			 * DB에서 이 명령이 적용된 row의 개수를 반환한다. 1개 입력되면 1을 리턴한다. 1이면 입력 성공, 0이면 입력 안됨
-			 */
 			int count = stmt.executeUpdate();
 			return count;
 		} catch (Exception e) {
 			throw e;
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (Exception e) {
-			}
+			try {if(stmt!=null) stmt.close();} catch(Exception e) {}
 			// 커넥션풀에서 빌려온 Connection 객체를 반납한다.
 //			if (connection != null)
 //				connPool.returnConnection(connection);
-			// DataSource가 제공하는 Connection의 Close()는 서버와의 단절이 아니라
-			// 커넥션풀로의 반환을 의미한다.
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (Exception e) {
-			}
+			
+			// DataSource가 제공하는 connection의 close()는 서버와의 단절이 아니라
+						// 커넥션풀로의 반환을 의미한다.
+						try {if(connection != null) connection.close();}catch(Exception e) {}
 		}
 	}
 
@@ -148,21 +124,13 @@ public class MemberDao {
 		} catch (Exception e) {
 			throw e;
 		} finally {
-			try {
-				if (stmt != null)
-					stmt.close();
-			} catch (Exception e) {
-			}
+			try {if(stmt!=null) stmt.close();} catch(Exception e) {}
 			// 커넥션풀에서 빌려온 Connection 객체를 반납한다.
 //			if (connection != null)
 //				connPool.returnConnection(connection);
-			// DataSource가 제공하는 Connection의 Close()는 서버와의 단절이 아니라
-			// 커넥션풀로의 반환을 의미한다.
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (Exception e) {
-			}
+			// DataSource가 제공하는 connection의 close()는 서버와의 단절이 아니라
+						// 커넥션풀로의 반환을 의미한다.
+						try {if(connection != null) connection.close();} catch(Exception e) {}
 		}
 	}
 
@@ -203,13 +171,9 @@ public class MemberDao {
 			// 커넥션풀에서 빌려온 Connection 객체를 반납한다.
 //			if (connection != null)
 //				connPool.returnConnection(connection);
-			// DataSource가 제공하는 Connection의 Close()는 서버와의 단절이 아니라
-			// 커넥션풀로의 반환을 의미한다.
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (Exception e) {
-			}
+			// DataSource가 제공하는 connection의 close()는 서버와의 단절이 아니라
+						// 커넥션풀로의 반환을 의미한다.
+						try {if(connection != null) connection.close();} catch(Exception e) {}
 		}
 	}
 
@@ -241,13 +205,9 @@ public class MemberDao {
 			// 커넥션풀에서 빌려온 Connection 객체를 반납한다.
 //			if (connection != null)
 //				connPool.returnConnection(connection);
-			// DataSource가 제공하는 Connection의 Close()는 서버와의 단절이 아니라
-			// 커넥션풀로의 반환을 의미한다.
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (Exception e) {
-			}
+			// DataSource가 제공하는 connection의 close()는 서버와의 단절이 아니라
+						// 커넥션풀로의 반환을 의미한다.
+						try {if(connection != null) connection.close();} catch(Exception e) {}
 		}
 	}
 
@@ -288,13 +248,9 @@ public class MemberDao {
 			// 커넥션풀에서 빌려온 Connection 객체를 반납한다.
 //			if (connection != null)
 //				connPool.returnConnection(connection);
-			// DataSource가 제공하는 Connection의 Close()는 서버와의 단절이 아니라
-			// 커넥션풀로의 반환을 의미한다.
-			try {
-				if (connection != null)
-					connection.close();
-			} catch (Exception e) {
-			}
+			// DataSource가 제공하는 connection의 close()는 서버와의 단절이 아니라
+						// 커넥션풀로의 반환을 의미한다.
+						try {if(connection != null) connection.close();} catch(Exception e) {}
 		}
 	}
 }
