@@ -7,26 +7,11 @@
 
 	<!-- 컨텍스트 초기화 파라미터 컨텍스트 : Web Application, 전체가 공유하는 영역 -->
 	<context-param>
-		<param-name>driver</param-name>
-		<param-value>com.mysql.cj.jdbc.Driver</param-value>
-	</context-param>
-	<context-param>
-		<param-name>url</param-name>
-		<param-value>jdbc:mysql://localhost:4306/studydb</param-value>
-	</context-param>
-	<context-param>
-		<param-name>username</param-name>
-		<param-value>study</param-value>
-	</context-param>
-	<context-param>
-		<param-name>password</param-name>
-		<param-value>study</param-value>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/application-context.properties</param-value>
 	</context-param>
 	
 	<!-- 리스너 선언 -->
-	<listener>
-		<listener-class>spms.listeners.ContextLoaderListener</listener-class>
-	</listener>
 	
 	<!-- 필터 선언 -->
 	
@@ -40,13 +25,14 @@
 	</servlet>
 	
 	<!-- 서블릿과 주소를 매핑 -->
-
+	
 	<!-- Tomcat의 DataSource를 소스상에서 접근하기 위한 설정 -->
 	<resource-ref>
 		<res-ref-name>jdbc/studydb</res-ref-name>
 		<res-type>javax.sql.DataSource</res-type>
 		<res-auth>Container</res-auth>
 	</resource-ref>
+
 
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
