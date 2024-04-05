@@ -19,6 +19,7 @@ public class LogOutServlet extends HttpServlet{
 		HttpSession session = req.getSession();
 		session.removeAttribute("member");   // 삭제
 		session.invalidate(); 				 // 저장소 초기화
+		
 		req.setAttribute("viewUrl", "redirect:login.do");
 		/*
 		resp.sendRedirect("login");
