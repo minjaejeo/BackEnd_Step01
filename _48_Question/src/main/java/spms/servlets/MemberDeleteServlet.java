@@ -1,6 +1,8 @@
 package spms.servlets;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.Statement;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -11,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import spms.dao.MemberDao;
-import spms.vo.Member;
 
 @SuppressWarnings("serial")
 @WebServlet("/member/delete")
@@ -26,15 +27,13 @@ public class MemberDeleteServlet extends HttpServlet {
 		try {
 			ServletContext sc = this.getServletContext();
 			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
-			Member member = (Member)request.getAttribute("member");
-			memberDao.delete(Integer.parseInt(request.getParameter("no")));
 			
-			request.setAttribute("viewUrl", "redirect:list.do");
-			/*
-		      memberDao.delete(Integer.parseInt(request.getParameter("no")));			
+		    memberDao.delete(Integer.parseInt(request.getParameter("no")));			
+		    
+		    request.setAttribute("viewUrl", "redirect:list.do");
 			
-			response.sendRedirect("list");
-			*/
+//			response.sendRedirect("list");
+			
 		} catch (Exception e) {
 			throw new ServletException(e);
 			/*
@@ -43,6 +42,7 @@ public class MemberDeleteServlet extends HttpServlet {
 			RequestDispatcher rd = request.getRequestDispatcher("/Error.jsp");
 			rd.forward(request, response);
 			*/
+			
 		} 
 	}
 }

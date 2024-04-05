@@ -1,7 +1,13 @@
 package spms.servlets;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,7 +35,8 @@ public class MemberUpdateServlet extends HttpServlet{
 
 		      req.setAttribute("member", member);
 		      req.setAttribute("viewUrl", "/member/MemberUpdateForm.jsp");
-			/*
+			
+		      /*
 			RequestDispatcher rd = req.getRequestDispatcher(
 					"/member/MemberUpdateForm.jsp");
 			rd.forward(req, resp);			
@@ -53,13 +60,13 @@ public class MemberUpdateServlet extends HttpServlet{
 		try {
 			ServletContext sc = this.getServletContext();
 			MemberDao memberDao = (MemberDao)sc.getAttribute("memberDao");
+
 			Member member = (Member)req.getAttribute("member");
 			memberDao.update(member);
 			
 			req.setAttribute("viewUrl", "redirect:list.do");
-
 			/*
-		     memberDao.update(new Member()
+		      memberDao.update(new Member()
 				      .setNo(Integer.parseInt(req.getParameter("no")))
 				      .setName(req.getParameter("name"))
 				      .setEmail(req.getParameter("email")));			
