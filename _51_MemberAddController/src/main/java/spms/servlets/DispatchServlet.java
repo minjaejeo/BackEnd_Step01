@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import spms.controls.Controller;
-import spms.controls.MemberAddController;
 import spms.controls.MemberListController;
 import spms.vo.Member;
 
@@ -35,10 +34,10 @@ public class DispatchServlet extends HttpServlet {
 		String servletPath = req.getServletPath();
 		System.out.println("DispatchServlet::service() - servletPath=" + servletPath);
 		
-		// Page Controller 한테 전달할 Map 객체를 준비한다.
+		// Page Controller한테 전달할 Map 객체를 준비한다.
 		/*
 		 * Map 인터페이스
-		 * HashMap은 단일스레드에서 사용
+		 * HashMap 은 단일스레드에서 사용
 		 * Hashtable은 멀티스레드에서 사용
 		 * ConcurrentHashMap은 멀티스레드에서 사용하되, Hashtable보다 속도가 보편적으로 빠른 편
 		 */
@@ -51,20 +50,12 @@ public class DispatchServlet extends HttpServlet {
 		
 		try {
 			String pageControllerPath = null;
-
+			
 			if("/member/list.do".equals(servletPath)) {
-				// 기존에 Servlet을 호출하던 구조에서 일반 Java 객체를 호출하는 방식으로 변경
+				// 기존에 Servlet을 호출하던 구조에서 일반 Java 객체를 호출하는 방식으러 변경
 				//pageControllerPath = "/member/list";
 				pageController = new MemberListController();
 			}else if("/member/add.do".equals(servletPath)) {
-				pageController = new MemberAddController();
-				if(req.getParameter("email") != null) {
-					model.put("member", new Member()
-							.setEmail(req.getParameter("email"))
-							.setPassword(req.getParameter("password"))
-							.setName(req.getParameter("name")));
-				}
-				/*
 				pageControllerPath = "/member/add";
 				if(req.getParameter("email") != null) {
 					req.setAttribute("member", new Member()
@@ -73,7 +64,6 @@ public class DispatchServlet extends HttpServlet {
 								.setName(req.getParameter("name"))	
 							);
 				}
-				*/
 			}else if("/member/update.do".equals(servletPath)) {
 				pageControllerPath = "/member/update";
 				if(req.getParameter("email") != null) {
@@ -91,12 +81,12 @@ public class DispatchServlet extends HttpServlet {
 				pageControllerPath = "/auth/logout";
 			}
 			
-			
-			String viewUrl = "";	// 다음에 이동할 jsp 나 redirect 경로
+			String viewUrl = "";	// 다음에 이동할 jsp나 redirect경로
 			
 			// pageController 객체가 존재한다면
 			if(pageController != null) {
-				System.out.println("DispatchServlet::service() - pageController ="  +  pageController.getClass().getName());
+				System.out.println("DispatchServlet::service()-pageController=" 
+						+ pageController.getClass().getName());
 				viewUrl = pageController.execute(model);
 				
 				for(String key : model.keySet()) {
@@ -105,26 +95,20 @@ public class DispatchServlet extends HttpServlet {
 			}
 			// 아직 pageController가 존재하지 않고, Servlet으로 되어 있을 때
 			else {
-				System.out.println("DispatchServlet::service() - pageControllerPath = " + pageControllerPath);
+				System.out.println("DispatchServlet::service() - pageController=" + pageControllerPath);
 				RequestDispatcher rd = req.getRequestDispatcher(pageControllerPath);
 				rd.include(req, resp);
 				
 				viewUrl = (String)req.getAttribute("viewUrl");
 			}
-			
 
-			
-			
-
-			System.out.println("DispatchServlet::service() - viewUrl = " + viewUrl);
-			
+			System.out.println("DispatchServlet::service() - viewUrl=" + viewUrl);
+			System.out.println("");
 			
 			if(viewUrl.startsWith("redirect:")) {
-				
 				resp.sendRedirect(viewUrl.substring("redirect:".length()));
 				return;
 			}
-			// 만약 'redirect:'로 시작되는 viewUrl이 아니면 내부 jsp이동으로 판단한다.
 			else {
 				RequestDispatcher rd = req.getRequestDispatcher(viewUrl);
 				rd.include(req, resp);

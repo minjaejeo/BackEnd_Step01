@@ -34,7 +34,7 @@ public class MemberListServlet extends HttpServlet{
 			// jsp이동을 위한 jsp 페이지 정보를 request에 저장
 			req.setAttribute("viewUrl", "/member/MemberList.jsp");
 
-			req.setAttribute("members", members);
+			
 			// 이제 jsp로 직접 보내는 것이 아니라
 			// DispatchServlet에게 jsp 이동을 맡긴다.
 			/*

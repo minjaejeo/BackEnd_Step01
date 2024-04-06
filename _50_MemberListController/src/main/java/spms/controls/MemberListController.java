@@ -13,15 +13,11 @@ public class MemberListController implements Controller {
 		// request 공간 대신 model로부터 꺼내어 사용한다.
 		MemberDao memberDao = (MemberDao)model.get("memberDao");
 		
-		// request 공간 대신 model에 저장한다
+		// request 공간 대신 model에 저장한다.
 		model.put("members", memberDao.selectList());
 		
 		// redirect나 이동할 jsp 경로를 리턴한다.
-		return	"/member/MemberList.jsp";
-		
-		
+		return "/member/MemberList.jsp";
 	}
-
 	
-
 }
