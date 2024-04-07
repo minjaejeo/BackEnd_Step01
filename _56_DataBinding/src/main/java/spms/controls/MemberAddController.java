@@ -16,12 +16,11 @@ public class MemberAddController implements Controller, DataBinding{
 	}
 	
 	@Override
-	public Object[] getDataBinders() {
+	public Object[] getDataBindiers() {
 		return new Object[] {
 				"member", spms.vo.Member.class
 		};
 	}
-	
 	
 	@Override
 	public String execute(Map<String, Object> model) throws Exception {
@@ -39,6 +38,11 @@ public class MemberAddController implements Controller, DataBinding{
 		}
 		
 	}
+
+
+
+
+
 }
 
 

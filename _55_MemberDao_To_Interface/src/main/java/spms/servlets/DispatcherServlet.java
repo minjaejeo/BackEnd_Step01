@@ -20,11 +20,9 @@ import spms.controls.MemberListController;
 import spms.controls.MemberUpdateController;
 import spms.vo.Member;
 
-
 @SuppressWarnings("serial")
 @WebServlet("*.do")
 public class DispatcherServlet extends HttpServlet{
-
 
 	@Override
 	protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,12 +31,11 @@ public class DispatcherServlet extends HttpServlet{
 
 		String servletPath = req.getServletPath();
 		System.out.println("DispatchServlet::service() - servletPath=" + servletPath);
-		
 
 		Map<String, Object> model = new ConcurrentHashMap<>();
 		//model.put("memberDao", this.getServletContext().getAttribute("memberDao"));
 		model.put("session", req.getSession());
-		
+
 		// 해당 주소와 일치하는 클래스 객체를 꺼내온다.
 		Controller pageController = (Controller)this.getServletContext().getAttribute(servletPath);
 		
@@ -46,7 +43,6 @@ public class DispatcherServlet extends HttpServlet{
 			String pageControllerPath = null;
 
 			if("/member/list.do".equals(servletPath)) {
-
 				//pageController = new MemberListController();
 			}else if("/member/add.do".equals(servletPath)) {
 				//pageController = new MemberAddController();
@@ -67,7 +63,6 @@ public class DispatcherServlet extends HttpServlet{
 				}else {
 			          model.put("no", Integer.parseInt(req.getParameter("no")));
 		        }
-				
 			}else if("/member/delete.do".equals(servletPath)) {
 				//pageController = new MemberDeleteController();
 				model.put("no", Integer.parseInt(req.getParameter("no")));
@@ -82,7 +77,7 @@ public class DispatcherServlet extends HttpServlet{
 				//pageController = new LogOutController();
 			}
 			
-			String viewUrl = "";		
+			String viewUrl = "";		// 다음에 이동할 jsp나 redirect경로
 			
 			// pageController 객체가 존재한다면
 			if(pageController != null) {
@@ -91,7 +86,7 @@ public class DispatcherServlet extends HttpServlet{
 				viewUrl = pageController.execute(model);
 				
 				/*
-				 * PageController.execute(model)내에서 처리된 결과 정보가 model에 들어있다.
+				 * pageController.execute(model) 내에서 처리된 결과 정보가 model에 들어있다.
 				 * 다음 화면 구성을 위해 jsp보내는 경우 jsp는 req를 통해서 데이터를 전달받기 때문에
 				 * model에 있는 처리 결과 정보를 꺼내서 다시 req에 담는다.
 				 */

@@ -14,12 +14,11 @@ public class MemberUpdateController implements Controller, DataBinding {
 		this.memberDao = memberDao;
 		return this;
 	}
-	
 	@Override
-	public Object[] getDataBinders() {
+	public Object[] getDataBindiers() {
 		return new Object[] {
-				"no", Integer.class,
-				"member", spms.vo.Member.class
+			"no", Integer.class,
+			"member", spms.vo.Member.class
 		};
 	}
 	

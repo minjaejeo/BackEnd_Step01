@@ -15,7 +15,7 @@ public class MemberDeleteController implements Controller, DataBinding {
 	}
 	
 	@Override
-	public Object[] getDataBinders() {
+	public Object[] getDataBindiers() {
 		return new Object[] {
 				"no", Integer.class
 		};

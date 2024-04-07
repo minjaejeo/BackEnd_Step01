@@ -16,14 +16,14 @@ public class LogInController implements Controller, DataBinding {
 		this.memberDao = memberDao;
 		return this;
 	}
-	
 	/*
-	 * LogInController가 execute()를 실행하기 위해서는
+	 * LogInController 가 execute()를 실행하기 위해서는
 	 * loginInfo라는 이름의 Member클래스 객체가 필요하다.
 	 * 이 객체를 자동으로 생성해서 담아주기를 바란다.
 	 */
+	
 	@Override
-	public Object[] getDataBinders() {
+	public Object[] getDataBindiers() {
 		return new Object[] {
 				"loginInfo", spms.vo.Member.class
 		};
