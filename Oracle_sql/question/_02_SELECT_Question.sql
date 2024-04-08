@@ -1,27 +1,50 @@
+--1) student 테이블 구조를 검색해라
+ DESC student;
 
+--2) course 테이블 구조를 검색해라
+DESC course;
 
+--3)professor 테이블 구조를 검색해라
+DESC professor;
+
+--4) score테이블 구조를 검색해라
+DESC score;
 
 --5) 모든 학생의 정보를 검색해라
-SELECT *
-	FROM student;
+-- SELECT *
+-- 	FROM student;
+SELECT * 
+ FROM student;
+
 
 --7) 모든 과목의 정보를 검색해라
+-- SELECT *
+-- 	FROM course;
+
 SELECT *
-	FROM course;
+ FROM course;
 
 --8) 기말고사 시험점수를 검색해라
-SELECT result
-	FROM score;
+-- SELECT result
+-- 	FROM score;
+SELECT *
+ FROM score;
 
 
 --9) 학생들의 학과와 학년을 검색해라
-SELECT sname, major, syear
-	FROM student;
+-- SELECT sname, major, syear
+-- 	FROM student;
+SELECT sno, sname, major, syear
+ FROM student;
 
 --10) 각 과목의 이름과 학점을 검색해라
-SELECT major, avr
-	FROM student;
-
+-- SELECT major, avr
+-- 	FROM student;
+SELECT cno, cname, st_num
+ FROM course;
+ 
 --11) 모든 교수의 직위를 검색해라
-SELECT pname, orders
-	FROM professor;
+-- SELECT pname, orders
+-- 	FROM professor;
+SELECT pno, pname, orders
+FROM professor;
