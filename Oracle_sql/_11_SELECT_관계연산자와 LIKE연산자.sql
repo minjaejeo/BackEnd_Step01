@@ -24,6 +24,21 @@ SELECT dno, eno, ename
  FROM emp
  WHERE dno='30';
 
+SELECT sal, eno, ename
+ FROM emp
+ WHERE sal >= 2000
+ ORDER BY sal DESC;
+
+SELECT job, eno, ename
+ FROM emp
+ WHERE job='개발';
+
+SELECT dno, sal, job, eno, ename
+ FROM emp
+ WHERE dno='30' AND sal>=2000 AND job='개발'
+ ORDER BY sal DESC;
+
+
 --3) 관계 연산자 우선순위
 NOT > AND > OR
 
@@ -33,27 +48,24 @@ NOT > AND > OR
 --10번 부서이거나, 월급이 1600초과하는 사원중에 보너스가 600을 초과하는 사원
 --10번 부서이거나 월급이 1600초과하는 사원중에, 보너스가 600을 초과하는 사원
 
-SELECT *
-  FROM emp
-  WHERE dno='10'
-    OR sal > 1600
-    AND comm > 600;
 
 SELECT *
-  FROM emp
-  WHERE dno='10'
-    OR (sal > 1600
-    AND comm > 600);
-
+ FROM emp
+ WHERE dno='10'
+  OR sal>1600
+  AND comm > 600;
 
 SELECT *
-  FROM emp
-  WHERE (dno='10'
-    OR sal > 1600)
-    AND comm > 600;
+ FROM emp
+ WHERE dno='10'
+  OR (sal>1600
+  AND comm > 600);
 
-
-
+SELECT *
+ FROM emp
+ WHERE (dno='10'
+  OR sal>1600)
+  AND comm > 600;
 
 [LIKE 연산자]
 ; a. 문자열 검색시 사용
@@ -75,35 +87,34 @@ SELECT *
 
 --4) 김씨 성을 가진 사원을 검색하세요
 SELECT *
-  FROM emp
-  WHERE ename LIKE '김%';
+ FROM emp
+ WHERE ename LIKE '김%';
 
 --아래는 김퍼센트를 찾으므로 잘못되었다.
 SELECT *
-  FROM emp
-  WHERE ename='김%';
+ FROM emp
+ WHERE ename='김%';
 
 5) 이름이 '하늘'인 사원
 SELECT *
-  FROM emp
-  WHERE ename LIKE '%하늘';
+ FROM emp
+ WHERE ename LIKE '%하늘';
 
 -- 6) 성과 이름이 각각 한 글자인 사원을 검색하세요
 SELECT *
- FROM emp 
- WHERE ename LIKE '_';
-
--- 7) 성과 이름이 각각 두 글자인 사원을 검색하세요
+ FROM emp
+ WHERE ename LIKE '__';
+-- 7) 성과 이름이 각각 두 글자인 학생을 검색하세요
 SELECT *
-  FROM student
-  WHERE sname LIKE '__';
+ FROM student
+ WHERE sname LIKE '__';
 
--- 8) 성과 이름이 각각 세 글자인 사원을 검색하세요
+-- 8) 성과 이름이 합쳐서 세 글자인 학생을 검색하세요
 SELECT *
-  FROM student
-  WHERE sname LIKE '___';
+ FROM student
+ WHERE sname LIKE '___';
 
 -- 9) 성이 '사마'씨로 시작되는 학생을 검색하세요
- SELECT *
-  FROM student
-  WHERE sname LIKE '사마%'; 
+SELECT *
+ FROM student
+ WHERE sname LIKE '사마%';

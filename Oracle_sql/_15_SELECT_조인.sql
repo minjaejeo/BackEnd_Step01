@@ -32,33 +32,32 @@ SELECT dno, eno, ename
  FROM emp;
 
 SELECT dno, dname
-    FROM dept;
+ FROM dept;
 
 --등가 조인
 --; 두 테이블의 공통 컬럼을 = 연산자로 조건을 부여한 것
 -- dno는 emp와 dept에 모두 존재하므로 명시적으로 table명.column명 이렇게 해야 한다.
 SELECT eno, ename, emp.dno, dept.dno, dname
-    FROM emp, dept
-    WHERE emp.dno=dept.dno;
-
+ FROM emp, dept
+ WHERE emp.dno=dept.dno;
 
 --2) 광주에서 근무하는 직원의 명단을 검색하세요
 --  (부서번호와 부서명도 검색하세요)
-SELECT *
-    FROM emp;
 
-SELECT *
-    FROM dept;
+SELECT * 
+ FROM emp;
 
-SELECT  loc, dept.dno, dname, eno, ename
-    FROM emp, dept
-    WHERE emp.dno=dept.dno;
+SELECT * 
+ FROM dept;
 
-SELECT  loc, dept.dno, dname, eno, ename
-    FROM emp, dept
-    WHERE emp.dno=dept.dno
-        AND loc='광주';
+SELECT loc, dept.dno, dname, eno, ename
+ FROM emp, dept
+ WHERE emp.dno=dept.dno;
 
+SELECT loc, dept.dno, dname, eno, ename
+ FROM emp, dept
+ WHERE emp.dno=dept.dno
+    AND loc='광주';
 
 --비등가 조인(특정값의 범위를 얻을 때)
 --; 한 테이블의 특정값을 가지고,
@@ -66,19 +65,24 @@ SELECT  loc, dept.dno, dname, eno, ename
 --3) 각 직원의 급여를 10%인상한 경우 급여 등급을 검색한다
 
 -- 10%인상 급여 계산
+
 SELECT sal "기존 급여", sal*1.1 "10% 인상 급여", eno, ename
-    FROM emp;
+ FROM emp;
+
 -- 현재 급여 등급 계산
 SELECT grade, sal, eno, ename
-    FROM emp, salgrade
-    WHERE sal BETWEEN losal AND hisal
-    ORDER BY grade, sal DESC;
+ FROM emp, salgrade
+ WHERE sal BETWEEN losal AND hisal;
+
+SELECT grade, sal, eno, ename
+ FROM emp, salgrade
+ WHERE sal BETWEEN losal AND hisal
+ ORDER BY grade, sal DESC;
 
 SELECT grade, sal*1.1 "10% 인상 급여", eno, ename
-    FROM emp, salgrade
-    WHERE sal*1.1 BETWEEN losal AND hisal
-    ORDER BY 1, 2 DESC;
-
+ FROM emp, salgrade
+ WHERE sal*1.1 BETWEEN losal AND hisal
+ ORDER BY 1, 2 DESC;
 
 --4) 잘못된 조인 (Cross Join)
 --; 조인 조건이 없으면 Cross Join 이라고 하며
@@ -87,10 +91,10 @@ SELECT grade, sal*1.1 "10% 인상 급여", eno, ename
 
 -- 모든 사원이 모든 부서에 매칭되는 결과를 보고 싶을 때
 -- 그 외는 의미 없다.
-SELECT * 
-    FROM emp, dept;
-  
-  
+
+SELECT *
+ FROM emp, dept;
+
   
   
   
