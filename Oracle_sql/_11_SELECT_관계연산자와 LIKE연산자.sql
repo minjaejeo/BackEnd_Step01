@@ -1,44 +1,28 @@
 [관계 연산자 : AND, OR]
 
 --1) 20번 부서원 중에 급여가 2000이상인 사원을 검색하세요
-SELECt *
+DESC emp;
+
+SELECT *
  FROM emp;
 
-SELECT *
-  FROM emp
-  WHERE dno='20';
+SELECT * 
+ FROM emp
+ WHERE dno='20';
 
 SELECT *
-  FROM emp
-  WHERE sal >= 2000;
+ FROM emp
+ WHERE dno='20' AND sal >=2000;
 
-SELECT *
-  FROM emp
-  WHERE dno='20' AND sal >= 2000;
-
- SELECT dno, sal, eno, ename
-  FROM emp
-  WHERE dno='20' AND sal >= 2000;
+SELECT dno, sal, eno, ename
+ FROM emp
+ WHERE dno='20' AND sal>=2000;
 
 --2) 30번 부서원 중에 급여가 2000이상이고 개발 업무를 담당하는
 --  사원을 검색하세요
 SELECT dno, eno, ename
  FROM emp
  WHERE dno='30';
-
-SELECT sal, eno, ename
-  FROM emp
-  WHERE sal >= 2000
-  ORDER BY sal DESC;
-
-SELECT job, eno, ename
-  FROM emp
-  WHERE job='개발';
-
-SELECT dno, sal, eno, ename
-  FROM emp
-  WHERE dno='30' AND sal >= 2000 AND job='개발'
-  ORDER BY sal DESC;
 
 --3) 관계 연산자 우선순위
 NOT > AND > OR
