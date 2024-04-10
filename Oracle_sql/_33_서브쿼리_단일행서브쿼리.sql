@@ -34,45 +34,44 @@ SELECT sal
  FROM emp
  WHERE ename='김연아';
 
-SELECT sal, eno, ename
+SELECT sal ,eno, ename
  FROM emp
- WHERE sal > 3300
+ WHERE sal>3300
  ORDER BY sal DESC;
 
 SELECT sal, eno, ename
  FROM emp
  WHERE sal > (SELECT sal
-                FROM emp
-                WHERE ename='김연아')
+              FROM emp
+              WHERE ename='김연아')
  ORDER BY sal DESC;
-
              
 2)노육과 평점이 동일한 학생의 정보를 검색하라
 --노육이 3명이라서 단일 행 연산자를 사용할 수가 없다
 --그래서 Error 가 발생했다
 
-SELECT sno, sname, avr 
+SELECT sno, sname, avr
  FROM student
  WHERE sname='노육';
 
-SELECT avr 
+SELECT avr
  FROM student
  WHERE sname='노육';
 
 SELECT sno, sname, avr
  FROM student
- WHERE avr = (SELECT avr 
-                FROM student
-                WHERE sname='노육');
+ WHERE avr= (SELECT avr
+              FROM student
+              WHERE sname='노육');
 
 
 --다중 행 서브 쿼리 (결과값이 여러 개의 행이다)
 
 SELECT sno, sname, avr
  FROM student
- WHERE avr IN (SELECT avr 
-                FROM student
-                WHERE sname='노육');
+ WHERE avr IN (SELECT avr
+              FROM student
+              WHERE sname='노육');
 
              
 예측하기 힘든 단일 행 서브쿼리를 수정하는 방법
@@ -104,10 +103,10 @@ SELECT *
  FROM emp
  WHERE dno!=(SELECT dno
               FROM emp
-              WHERE ename='김연아') 
+              WHERE ename='김연아')
   AND job=(SELECT job
-              FROM emp
-              WHERE ename='김연아');
+            FROM emp
+            WHERE ename='김연아');
 
          
 4) 부서 중 가장 급여를 많이 받는 부서를 검색하라
@@ -115,15 +114,14 @@ SELECT *
 --2) 일치하는 부서를 출력
 
 --부서별 평균급여
-SELECT dno, AVG(sal)
- FROM emp
- GROUP BY dno;
 
 SELECT dno, AVG(sal)
  FROM emp
  GROUP BY dno;
+
 
 -- 부서별 평균을 구하고 가장 큰 값을 구한다.
+
 SELECT MAX(AVG(sal))
  FROM emp
  GROUP BY dno;
@@ -133,14 +131,16 @@ SELECT MAX(AVG(sal))
 SELECT dno, AVG(sal)
  FROM emp
  GROUP BY dno
- HAVING AVG(sal)=50555;
+ HAVING AVG(sal) = 9999;
 
 SELECT dno, AVG(sal)
  FROM emp
  GROUP BY dno
- HAVING AVG(sal)=(SELECT MAX(AVG(sal))
-                    FROM emp
-                    GROUP BY dno);
+ HAVING AVG(sal) = (SELECT MAX(AVG(sal))
+                      FROM emp
+                      GROUP BY dno);
+
+
 
 
 
@@ -150,27 +150,22 @@ SELECT dno, AVG(sal)
   b) 해당 부서번호와 일치하는 사원의 정보 검색
   
 SELECT dno, dname
- FROM dept  
+ FROM dept
  WHERE loc='부산';
 
 SELECT dno
- FROM dept  
+ FROM dept
  WHERE loc='부산';
-         
-SELECT *
+
+SELECT * 
  FROM emp
  WHERE dno='20';
 
-
-SELECT *
+SELECT * 
  FROM emp
  WHERE dno=(SELECT dno
-            FROM dept  
+            FROM dept
             WHERE loc='부산');
-
-
-
-
 
 
 
