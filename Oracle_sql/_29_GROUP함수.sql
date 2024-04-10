@@ -14,33 +14,36 @@ VARIANCE 분산을 계산
 3) GROUP BY 없이 일반 컬럼과 기술될 수 없다
 
 1) 사원의 평균 급여를 검색한다
+
 SELECT AVG(sal) "평균 급여",
       ROUND(AVG(sal)),
-      ROUND(AVG(sal),2),
+      ROUND(AVG(sal), 2),
       TRUNC(AVG(sal)),
-      TRUNC(AVG(sal),2)
+      TRUNC(AVG(sal), 2)
   FROM emp;
 
 2) 사원들에게 지급된 보너스 총합과 보너스 평균을 검색한다
+
 SELECT SUM(comm) "보너스 총합",
-    ROUND(AVG(comm)) "보너스 평균",
-    COUNT(comm) "수령 인원",
-    ROUND(AVG(NVL(comm, 0))) "보너스 평균",
-    COUNT(*) "전체 사원 수"
+      ROUND(AVG(comm)) "보너스 평균",
+      COUNT(comm) "수령 인원",
+      ROUND(AVG(NVL(comm, 0))) "보너스 평균",
+      COUNT(*) "전체 사원 수"
   FROM emp;
 
-SELECT 20729/15
-  FROM dual;
+SELECT ROUND(20729/15)
+ FROM dual;
 
 
 3) 보너스에서 null 이 아닌 사람 수를 계산하세요
+
 SELECT * 
  FROM emp
  WHERE comm IS NULL;
 
 SELECT *
-  FROM emp
-  WHERE comm IS NOT NULL;
+ FROM emp
+ WHERE comm IS NOT NULL;
 
 SELECT COUNT(comm)
  FROM emp;
@@ -90,32 +93,31 @@ AVG(sal)은 1개의 결과 행만 출력하므로
 --전체의 급여 평균과 연봉 평균 계산
 SELECT ROUND(AVG(sal)) "급여 평균",
       ROUND(AVG(sal*12+NVL(comm,0))) "연봉 평균"
-  FROM emp;
+ FROM emp;
 
 SELECT job 업무
-  FROM emp;
+ FROM emp;
 
 SELECT DISTINCT job 업무
-  FROM emp;
+ FROM emp;
 
 -- 업무의 종류와 전체평균급여, 전체평균 연봉을 구하려고 하니
 -- 카디널리티(결과의 갯수)가 일치하지 않아서 오류가 발생한다.
-SELECT job 업무,                                  -- 19개 결과
-    ROUND(AVG(sal)) "급여 평균",                  -- 1개 결과
-    ROUND(AVG(sal*12+NVL(comm,0))) "연봉 평균"    -- 1개 결과
-  FROM emp;
+SELECT job 업무,        -- 19개 결과
+      ROUND(AVG(sal)) "급여 평균",  -- 1개 결과
+      ROUND(AVG(sal*12+NVL(comm,0))) "연봉 평균"  -- 1개 결과
+  FROM emp;  
 
-SELECT job 업무,                                  -- 19개 결과
-    ROUND(AVG(sal)) "업무별 급여 평균",                  -- 1개 결과
-    ROUND(AVG(sal*12+NVL(comm,0))) "업무별 연봉 평균",    -- 1개 결과
-    COUNT(*) "해당업무별 "
+SELECT job 업무, 
+      ROUND(AVG(sal)) "업무별 급여 평균",
+      ROUND(AVG(sal*12+NVL(comm, 0))) "업무별 연봉 평균",
+      COUNT(*) "해당 업무 인원수"
   FROM emp
   GROUP BY job;
 
 SELECT *
-  FROM emp
-  WHERE job='백수';
-
+ FROM emp
+ WHERE job='귀요미';
 
 결과 행의 개수가 14개이다
 
@@ -142,7 +144,8 @@ SELECT dno,
   FROM emp
   GROUP BY dno;
 
-SELECT dno, dname, COUNT(eno) 사원수,
+SELECT dno, dname,
+      COUNT(eno) 사원수,
       ROUND(AVG(sal)),
       ROUND(AVG(sal*12+NVL(comm,0)))
   FROM emp
