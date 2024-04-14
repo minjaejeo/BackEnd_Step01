@@ -60,7 +60,11 @@ SELECT * FROM dept;
 
 DELETE FROM dept;
 
+SELECT * FROM dept;
+
 ROLLBACK;
+
+SELECT * FROM dept;
 
 2) emp와 dept테이블의 모든 데이터를 삭제한다
 
@@ -133,6 +137,7 @@ ROLLBACK;
 
 SELECT * FROM emp;
 
+
 데이터를 넣을 때 자료형을 일치시켜야 한다 - 정형 데이터
 9999 -> '구천' : 이렇게 넣으면 오류가 발생한다
 
@@ -141,7 +146,7 @@ INSERT INTO emp(eno, ename, job, mgr, hdate, sal, comm, dno)
 
 -- '9000' varchar2타입이 => 9000 Number타입으로 자동 형 변환
 INSERT INTO emp(eno, ename, job, mgr, hdate, sal, comm, dno)
- VALUES('1905', 'Risa', '백수', null, SYSDATE, '9000', 9999, '40');
+ VALUES('1906', 'Risa', '백수', null, SYSDATE, '9000', 9999, '40');
 
 COMMIT;
 
@@ -160,7 +165,7 @@ emp
 --그러나 트와이스방탄소년단 27byte를 저장하려고 했으므로 에러 발생함.
 
 INSERT INTO emp(eno, ename, job, mgr, hdate, sal, comm, dno)
- VALUES('1906', '트와이스방탄소년단', '백수', null, SYSDATE, '9000', 9999, '40');
+ VALUES('1907', '트와이스방탄소년단', '백수', null, SYSDATE, '9000', 9999, '40');
 
 
 5) 세션 날짜 형식과 안맞으므로 입력 오류가 발생한다
@@ -192,23 +197,24 @@ emp
 
 --ORA-01861: literal does not match format string
 INSERT INTO emp(eno, ename, hdate)
- VALUES('1911', '김나라', '2022-01-02:07:15:29');
+  VALUES('1911', '김나라', '2022-01-02:07:15:29');
 
 INSERT INTO emp(eno, ename, hdate)
- VALUES('1911', '김나라', TO_DATE('2022-01-02:07:15:29', 'YYYY-MM-DD:HH24:MI:SS'));
+  VALUES('1911', '김나라', TO_DATE('2022-01-02:07:15:29', 'YYYY-MM-DD:HH24:MI:SS'));
+
 
 COMMIT;
 
 SELECT * FROM emp;
 
---7) 날짜에 적용되는 디폴트 값을 확인한다
 
+--7) 날짜에 적용되는 디폴트 값을 확인한다
 
 SELECT * FROM emp;
 
 SELECT eno, ename, hdate
  FROM emp;
- 
+
 SELECT eno, ename, TO_CHAR(hdate, 'YYYY-MM-DD/HH24/MI/SS')
  FROM emp;
 
@@ -217,20 +223,16 @@ INSERT INTO emp(eno, hdate)
 INSERT INTO emp(eno, hdate)
  VALUES('2', TO_DATE('99', 'YY'));
 INSERT INTO emp(eno, hdate)
- VALUES('3', TO_DATE('99', 'RR'));  -- 현재년도에서 2099년이 가까운지 아니면 1999년이 가까운지
+ VALUES('3', TO_DATE('99', 'RR')); -- 현재년도에서 2099년이 가까운지 아니면 1999년이 가까운지
 INSERT INTO emp(eno, hdate)
  VALUES('4', SYSDATE);
 
-COMMIT;
 
--- SELECT eno, TO_CHAR(hdate, 'YYYY-MM-DD/HH24/MI/SS')
---  FROM emp
---  WHERE eno BETWEEN '1' AND '4';
+COMMIT;
 
 SELECT eno, TO_CHAR(hdate, 'YYYY-MM-DD/HH24/MI/SS')
  FROM emp
- WHERE eno IN ('1', '2', '3' ,'4');
-
+ WHERE eno IN ('1', '2', '3', '4');
 
 , 
 8) 이승철의 부서번호를 10번으로 수정하고 급여를 10% 인상하자
@@ -250,9 +252,6 @@ COMMIT;
 SELECT dno, sal, eno, ename
  FROM emp
  WHERE ename='이승철';
-
-
-
 
 
 

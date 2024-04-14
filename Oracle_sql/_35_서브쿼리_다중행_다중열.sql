@@ -16,36 +16,35 @@ WHERE 컬럼 <다중 행 연산자> (SELECT문 : Sub Query문);
  a) 20번 부서원들의 관리자가 여러 명일 수 있다
  b) 서브쿼리의 결과가 몇 개일지 예측할 수 없는 경우
     다중 행 연산자를 이용하여 다중 행 서브쿼리를 작성한다
-    
-SELECT mgr 
+
+-- 0201, 0202, 1002    
+SELECT mgr
  FROM emp
- WHERE dno='20';     -- 0201, 0202, 1002
+ WHERE dno='20';
 
 SELECT mgr, dno, eno, ename
-   FROM emp
-   WHERE (mgr='0201' OR mgr='0202' OR mgr='1002')
-   AND dno!='20';
+ FROM emp
+ WHERE (mgr='0201' OR mgr='0202' OR mgr='1002')
+ AND dno!='20';
 
 SELECT mgr, dno, eno, ename
-   FROM emp
-   WHERE mgr IN ('0201', '0202', '1002')
-   AND dno!='20';
+ FROM emp
+ WHERE mgr IN ('0201', '0202', '1002')
+ AND dno!='20';
 
 SELECT mgr, dno, eno, ename
-   FROM emp
-   WHERE mgr IN (SELECT mgr 
+ FROM emp
+ WHERE mgr IN (SELECT mgr
                   FROM emp
                   WHERE dno='20')
-   AND dno!='20';
-
+ AND dno!='20';
 
 SELECT mgr, dno, eno, ename
-   FROM emp
-   WHERE mgr IN (SELECT DISTINCT mgr 
+ FROM emp
+ WHERE mgr IN (SELECT DISTINCT mgr
                   FROM emp
                   WHERE dno='20')
-   AND dno!='20';
-
+ AND dno!='20';
 
 2) 10번 부서원들보다 급여가 낮은 사원을 검색한다
  2-1) 10번 부서원들의 급여 검색
@@ -53,20 +52,19 @@ SELECT mgr, dno, eno, ename
       ALL
       MIN
 
+-- 4500, 3950, 3200
 SELECT sal
  FROM emp
- WHERE dno='10';     -- 4500, 3950, 3200
+ WHERE dno='10';
 
 SELECT sal, dno, eno, ename
  FROM emp
  WHERE sal < ALL(4500, 3950, 3200);
 
-
 SELECT sal, dno, eno, ename
  FROM emp
  WHERE sal < ALL(4500, 3950, 3200)
  AND dno!='10';
-
 
 SELECT sal, dno, eno, ename
  FROM emp
@@ -82,9 +80,9 @@ SELECT MIN(sal)
 SELECT sal, dno, eno, ename
  FROM emp
  WHERE sal < (SELECT MIN(sal)
-                  FROM emp
-                  WHERE dno='10')
- AND dno!='10';
+               FROM emp
+               WHERE dno='10')
+ AND dno != '10';
 
 
 다중 행 연산자와 그룹 함수
@@ -100,37 +98,29 @@ ANY : 모두 중에 하나라도
 
 3) 20번 부서원들과 보너스가 같은 사원을 검색한다
 
-
+-- 330, 2000, null
 SELECT comm
  FROM emp
- WHERE dno='20';  -- 330, 2000, null
+ WHERE dno='20';
+
+-- 330, 2000, 0
+SELECT NVL(comm, 0)
+ FROM emp
+ WHERE dno='20';
 
 -- null은 비교대상이 되지 않는다.
 SELECT *
- FROM emp
- WHERE comm IN(330, 2000, null)
+ FROm emp
+ WHERE comm IN (330, 2000, null)
  AND dno!='20';
 
-
-
-
-
---null 을 0으로 치환해서 검색할지는 판단을 내려야 한다
-
-SELECT NVL(comm,0)
+-- null을 0으로 치환해서 검색할지는 판단을 내려야한다.
+SELECT * 
  FROM emp
- WHERE dno='20';  
-
-SELECT *
- FROM emp
- WHERE NVL(comm,0) IN(SELECT NVL(comm,0)
+ WHERE NVL(comm, 0) IN (SELECT NVL(comm, 0)
                         FROM emp
                         WHERE dno='20')
  AND dno!='20';
-
-
-
-
 
 
 다중 열 서브 쿼리
@@ -155,21 +145,20 @@ SELECT job
  FROM emp
  WHERE ename='손하늘';
 
-SELECT *
+SELECT * 
  FROM emp
  WHERE mgr='0001' AND job='지원'
  AND ename!='손하늘';
 
-SELECT *
+SELECT * 
  FROM emp
  WHERE mgr=(SELECT mgr
-            FROM emp
-            WHERE ename='손하늘') 
+               FROM emp
+               WHERE ename='손하늘') 
  AND job=(SELECT job
             FROM emp
             WHERE ename='손하늘')
  AND ename!='손하늘';
-
 
 손하늘 사원이 1명만 존재한다면 단일 행 서브쿼리로 변경할
 수도 있다. 손하늘 사원이 여러 명이면 다중 열 서브쿼리로만
@@ -180,7 +169,7 @@ SELECT *
  WHERE (mgr, job) IN (SELECT mgr, job
                         FROM emp
                         WHERE ename='손하늘')
- AND ename!='손하늘';
+   AND ename!='손하늘';
 
 5) 각 부서별로 최소 급여를 받는 사원의 정보를 검색한다
 (이름, 급여)
@@ -194,12 +183,9 @@ SELECT dno, MIN(sal)
 SELECT *
  FROM emp
  WHERE sal IN (SELECT MIN(sal)
-                  FROM emp
-                  GROUP BY dno)
+               FROM emp
+               GROUP BY dno)  
  ORDER BY dno;
-
-
-
 
 
 

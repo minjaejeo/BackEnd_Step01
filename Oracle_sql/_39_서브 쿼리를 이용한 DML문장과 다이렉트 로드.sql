@@ -65,7 +65,7 @@ SELECT * FROM emp2;
 DESC emp2;
 
 INSERT INTO emp2(eno, asal)
- SELECT eno, sal*12+NVL(comm,0)
+ SELECT eno, sal*12+NVL(comm, 0)
   FROM emp;
 
 COMMIT;
@@ -85,7 +85,6 @@ INSERT INTO emp2(eno, asal)
  SELECT eno, hdate
   FROM emp;
 
-
 INSERT INTO emp2(eno, asal)
  SELECT eno, ename
   FROM emp;
@@ -99,9 +98,7 @@ INSERT INTO emp2(eno, asal)
 
 COMMIT;
 
-
 SELECT * FROM emp2;
-
 
 
 4) 각 사원의 정보와 근무지를 emp3 테이블에 저장하라
@@ -114,8 +111,7 @@ DESC emp3;
 INSERT /*+ APPEND*/ INTO emp3 NOLOGGING(eno, ename, dno, dname)
  SELECT eno, ename, dno, dname
   FROM emp
-  JOIN dept USING(dno);
-  
+  JOIN dept USING(dno);  
 
 
 --ORA-12838: cannot read/modify an object after modifying it in parallel
@@ -171,12 +167,12 @@ SELECT 작업이나 DML 작업은 모두 메모리에서 이루어진다.
 손하늘의 보너스와 동일하게 수정한다
 
 SELECT sal, comm, eno, ename
- FROM emp 
- WHERE ename IN('윤고은', '김연아', '손하늘');
+ FROM emp
+ WHERE ename IN ('윤고은', '김연아', '손하늘');
 
 -- 2100, null
 SELECT sal, comm
- FROM emp 
+ FROM emp
  WHERE ename='윤고은';
 
 -- 3300
@@ -190,35 +186,35 @@ SELECT comm
  WHERE ename='손하늘';
 
 UPDATE emp SET
- sal = 3300,
- comm = 980
+ sal=3300,
+ comm=980
  WHERE ename='윤고은';
 
 SELECT sal, comm
- FROM emp 
+ FROM emp
  WHERE ename='윤고은';
 
-ROLLBACK;
- 
+ ROLLBACK;
+
 SELECT sal, comm
- FROM emp 
+ FROM emp
  WHERE ename='윤고은';
-
 
 UPDATE emp SET
- sal = (SELECT sal
-          FROM emp
-          WHERE ename='김연아'),
- comm = (SELECT comm
-          FROM emp
-          WHERE ename='손하늘')
- WHERE ename='윤고은';
+ sal=(SELECT sal
+        FROM emp
+        WHERE ename='김연아'),
+ comm=(SELECT comm
+        FROM emp
+        WHERE ename='손하늘')
+ WHERE ename='윤고은'; 
 
 COMMIT;
 
 SELECT sal, comm
- FROM emp 
+ FROM emp
  WHERE ename='윤고은';
+
 
 
 7) 제갈민과 동일한 부서의 사원들의 급여를
@@ -236,38 +232,31 @@ SELECT sal
 
 SELECT dno, sal, eno, ename
  FROM emp
- WHERE dno='20'
- AND ename!='제갈민';
-
-UPDATE emp SET 
- sal = 1520
  WHERE dno='20' AND ename!='제갈민';
 
-UPDATE emp SET 
- sal = (SELECT sal
-          FROM emp
-          WHERE ename='제갈민')
+UPDATE emp SET
+ sal=1520
+ WHERE dno='20' AND ename!='제갈민';
+
+UPDATE emp SET
+ sal=(SELECT sal
+        FROM emp
+        WHERE ename='제갈민')
  WHERE dno=(SELECT dno
               FROM emp
               WHERE ename='제갈민') 
  AND ename!='제갈민';
 
- COMMIT;
+COMMIT;
 
 SELECT dno, sal, eno, ename
  FROM emp
  WHERE dno=(SELECT dno
-            FROM emp
-            WHERE ename='제갈민');
+              FROM emp
+              WHERE ename='제갈민');
 
 
-UPDATE emp SET 
-  sal = (SELECT sal
-          FROM emp
-          WHERE ename='제갈민')
-  WHERE dno=20;
 
-SELECT * FROM emp WHERE dno=20;
 
 
 8) 이초록의 급여, 보너스를 김연아와 동일하게 수정한다
@@ -276,39 +265,35 @@ SELECT * FROM emp WHERE dno=20;
 -- 김연아 : 3300, 0
 SELECT sal, comm, eno, ename
  FROM emp
- WHERE ename IN ('김연아', '이초록');
+ WHERE ename IN ('이초록', '김연아');
 
+ROLLBACk;
 
-UPDATE emp SET 
+UPDATE emp SET
  (sal, comm) = (SELECT sal, comm
-                  FROM emp 
-                  WHERE ename='김연아')
-  WHERE ename='이초록';
+                FROM emp
+                WHERE ename='김연아')
+    WHERE ename='이초록';
 
- SELECT sal, comm, eno, ename
+SELECT sal, comm, eno, ename
  FROM emp
- WHERE ename IN ('김연아', '이초록');
+ WHERE ename IN ('이초록', '김연아');
 
-ROLLBACK;
-
+COMMIT;
 
  
 9)위의 Query 보다 아래 Query 가 성능이 낮다
 
- UPDATE emp SET
+UPDATE emp SET
  sal = (SELECT sal
-          FROM emp 
-          WHERE ename='김연아'),
- comm = (SELECT comm
-          FROM emp 
-          WHERE ename='김연아')
- WHERE ename='이초록';
+            FROM emp
+            WHERE ename='김연아'),
+  comm = (SELECT comm
+                FROM emp
+                WHERE ename='김연아')
+    WHERE ename='이초록'
 
-SELECT sal, comm, eno, ename
- FROM emp
- WHERE ename IN ('김연아', '이초록');
 
-COMMIT;
  
 --10) 제갈민을 제외한 같은 부서원을 삭제하세요
 
@@ -318,7 +303,7 @@ SELECT dno
  FROM emp
  WHERE ename='제갈민';
 
-DELETE
+DELETE 
  FROM emp
  WHERE dno='20'
   AND ename!='제갈민';
@@ -326,25 +311,23 @@ DELETE
 SELECT dno, eno, ename
  FROM emp
  WHERE dno = (SELECT dno
-                FROM emp
-                WHERE ename='제갈민');
+              FROM emp
+              WHERE ename='제갈민');
 
- DELETE FROM emp
-  WHERE dno= (SELECT dno
-                FROM emp
-                WHERE ename='제갈민')
-    AND ename!='제갈민';
-
-
-SELECT dno, eno, ename
+DELETE 
+ FROM emp
+ WHERE dno=(SELECT dno
+              FROM emp
+              WHERE ename='제갈민')
+  AND ename!='제갈민';
+ 
+ 
+ SELECT dno, eno, ename
  FROM emp
  WHERE dno = (SELECT dno
-                FROM emp
-                WHERE ename='제갈민');
- 
- 
- 
+              FROM emp
+              WHERE ename='제갈민');
 
  
- 
+ ROLLBACK;
  
