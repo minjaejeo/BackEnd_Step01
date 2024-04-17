@@ -44,17 +44,22 @@
     2) CASCADE CONSTRAINT : 테이블이 다른 테이블로부터
        참조되는 경우 해당 제약조건을 먼저 삭제한 후
        테이블을 삭제한다.
-       
-    SELECT table_name, column_name, 
-           data_type, data_length
-    FROM user_tab_columns   -- sys 계정의 소유 테이블
-    WHERE table_name = 테이블명;
+
+  SELECT table_name, column_name,
+        data_type, date_length
+    FROM user_tab_columns -- sys 계정의 소유 테이블
+    WHERE table_name = 테이블명;       
+
+
     
 --    테이블 이름을 대문자로 해야 한다
-    SELECT table_name, column_name, 
-    data_type, data_length
+
+  SELECT table_name, column_name,
+        data_type, data_length
     FROM user_tab_columns   -- sys 계정의 소유 테이블
     WHERE table_name = 'EMP';
+
+
    
     1) user_tab_columns 데이터 딕셔너리(Data Dictionary)
       를 통해서 지정한 테이블의 구조를 자세히 검색한다
@@ -144,25 +149,21 @@ DESC board;
 
 SELECT * FROM board;
 
-
-  SELECT table_name, column_name, 
-    data_type, data_length
-    FROM user_tab_columns 
+SELECT table_name, column_name
+      data_type, data_length
+    FROM user_tab_columns
     WHERE table_name = 'BOARD';
 
 
   -- sys 계정의 소유 테이블
 
 INSERT INTO board(no, hdate)
- VALUES(1, TO_DATE('2024/04/05', 'YYYY/MM/DD'));
+  VALUES(3, TO_DATE('2024/04/05', 'YYYY/MM/DD'));
 
 INSERT INTO board(no)
- VALUES(2);
-
-COMMIT;
+ VALUES(4);
 
 SELECT * FROM board;
-
 
 SELECT no, TO_CHAR(hdate, 'YYYY-MM-DD:HH24:MI:SS')
  FROM board;
@@ -174,9 +175,7 @@ SELECT no, TO_CHAR(hdate, 'YYYY-MM-DD:HH24:MI:SS')
 CREATE TABLE t2 (name VARCHAR2(3));
 
 INSERT INTO t2 VALUES('AAA');
-
 INSERT INTO t2 VALUES('가나다');
-
 INSERT INTO t2 VALUES('가');
 
 
@@ -222,12 +221,12 @@ SELECT no, TO_CHAR(hdate, 'YYYY/MM/DD HH24:MI:SS') FROM hd;
 
 ALTER SESSION SET nls_date_format='YY/MM/DD';
 
-
 SELECT * FROM hd
- WHERE hdate = '2024/04/16';    -- 2024/04/16 00:00:00
+ WHERE hdate='2024/04/16';
 
 SELECT * FROM hd
  WHERE TRUNC(hdate) = '2024/04/16';
+
 
 
 
@@ -243,9 +242,11 @@ a와 b까지 모두 포함하는 범위
 SELECT * FROM hd
  WHERE hdate BETWEEN '2024/04/16' AND '2024/04/17';
 
+
 SELECT * FROM hd
  WHERE hdate >= '2024/04/16'
- AND  hdate < '2024/04/17';
+ AND hdate < '2024/04/17';
+
  
  위의 비교는 '2024/04/16'을
 
@@ -256,7 +257,6 @@ SELECT * FROM hd
 SELECT *
  FROM hd
  WHERE hdate LIKE '24/04/16%';
-
 
 1) 우리나라에서는 날짜는 DATE 보다 VARCHAR2(8)
    이렇게 정의하는 경우가 많다.'20210706'

@@ -1,7 +1,6 @@
 
 -- ncp08 / ncp08 로 접속한 후에 테이블을 생성한다.
 
-
 DROP TABLE todo_user;
 
 CREATE TABLE todo_user(
@@ -26,5 +25,10 @@ CREATE TABLE todo_project(
     sdate DATE,
     edate DATE,
     finished NUMBER(1)
+)
 
-);
+
+
+
+
+
